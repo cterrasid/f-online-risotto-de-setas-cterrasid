@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Servicio de recetas</title>
+    <link rel="icon" href="favicon.png" />
+    <link rel="stylesheet" href="main.scss" />
+  </head>
+
+  <body>
+    <div class="page">
+      <header class="header__container">
+        <p class="header__ingredients">Ingredients</p>
+        <h1 class="header__title"></h1>
+
+        <button type="button" class="header__btn" id="select">
+          Select all
+        </button>
+        <button type="button" class="header__btn" id="deselect">
+          Deselect all
+        </button>
+      </header>
+      <main class="page__main">
+        <article class="item__container">
+          <label class="item__select" for="select" title="Select">
+            <input id="select" type="checkbox" value="select" name="select" />
+          </label>
+          <label class="item__quantity" for="quantity" title="Quantity">
+            <input id="quantity" type="number" value="1" min="0" />
+          </label>
+          <div class="item__characteristics">
+            <h2 class="item__name">Artículo</h2>
+
+            <p class="item__brand">Marca</p>
+            <p class="item__weight">XX gr</p>
+          </div>
+          <p class="item__cost">X,XX€</p>
+        </article>
+        <section>
+          <div>
+            <p>Items:</p>
+          </div>
+          <div>
+            <p>Subtotal</p>
+          </div>
+          <div>
+            <p>Gastos de envío</p>
+          </div>
+          <div>
+            <p>Total</p>
+          </div>
+          <button type="button">Comprar ingredientes:</button>
+        </section>
+      </main>
+    </div>
+    <script type="text/javascript" src="main.js"></script>
+  </body>
+</html>
