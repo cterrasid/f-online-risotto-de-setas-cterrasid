@@ -55,37 +55,58 @@ const object = {
   }
 };
 
-const mainTitle = document.querySelector(".header__title");
-const listOfIngredients = document.querySelector(".ingredients__container");
+const recipeTitle = document.querySelector(".header__title");
+const ingredientsList = document.querySelector(".ingredients__container");
+
+const totalItems = document.querySelector(".result__items-value");
+const subtotalPrice = document.querySelector(".result__subtotal-value");
+const shippingPrice = document.querySelector(".result__shipping-value");
 const totalPrice = document.querySelector(".result__price-total");
-const totalItems = document.querySelector(".result__items-total");
 
-const URL =
-  "https://raw.githubusercontent.com/Adalab/recipes-data/master/rissoto-setas.json";
+const shippingValue = 7;
 
-async function request() {
-  // function request() {
-  const response = await fetch(URL);
-  const object = await response.json();
-  const recipe = object.recipe;
-  const ingredients = recipe.ingredients;
-  console.log(ingredients);
+let itemsQuantity;
 
-  paintElements();
-}
+// const URL =
+//   "https://raw.githubusercontent.com/Adalab/recipes-data/master/rissoto-setas.json";
+
+// async function request() {
+//   const response = await fetch(URL);
+//   const object = await response.json();
+const recipe = object.recipe;
+const name = recipe.name;
+const title = document.createTextNode(name);
+recipeTitle.appendChild(title);
+const ingredients = object.recipe.ingredients;
+paintElements();
+
+// ingredientsList.innerHTML += `<li>
+//   <label for="select" title="select">
+//     <input class="select-item" id="select" type="checkbox" value="select" name="select" />
+//   </label>
+//   <label for="quantity" title="quantity">
+//     <input id="quantity" type="number" value=${item} min="0" />
+//   </label>
+//   <div class="product__container">
+//     <h2>${product}</h2>
+//     <p>${brand === undefined ? "Marca no disponible" : brand}</p>
+//     <p>${quantity}</p>
+//   </div>
+//   <div class="price__container">
+//     <p>${price} ${currency}</p>
+//   </div>
+// </li>`;
+
+// }
+
+// request();
 
 function paintElements() {
-  request();
-
-  const name = recipe.name;
-  const title = document.createTextNode(name);
-  mainTitle.appendChild(title);
-
   ingredients.map(ingredient => {
-    //list
+    //Create list element
     const listElement = document.createElement("li");
 
-    //checkbox
+    //Create checkbox
     const labelCheckbox = document.createElement("label");
     labelCheckbox.for = "select";
     labelCheckbox.title = "select";
@@ -96,20 +117,19 @@ function paintElements() {
     inputCheckbox.name = "select";
     labelCheckbox.appendChild(inputCheckbox);
 
-    //number
+    //Create input for item quantity
     const labelNumber = document.createElement("label");
-    labelNumber.for = "quantity";
-    labelNumber.title = "quantity";
+    labelNumber.for = "item";
+    labelNumber.title = "item";
     const inputNumber = document.createElement("input");
     inputNumber.type = "number";
-    inputNumber.id = "quantity";
-    inputNumber.value = ingredient.quantity;
+    inputNumber.id = "item";
+    inputNumber.value = ingredient.items;
     inputNumber.min = "0";
     labelNumber.appendChild(inputNumber);
 
-    //product
+    // Create product data elements
     const containerProduct = document.createElement("div");
-
     const productElement = document.createElement("h2");
     const product = document.createTextNode(ingredient.product);
     productElement.appendChild(product);
@@ -120,34 +140,30 @@ function paintElements() {
     );
     brandElement.appendChild(brand);
 
-    const weightElement = document.createElement("p");
-    const weight = document.createTextNode(ingredient.weight);
-    weightElement.appendChild(weight);
+    const quantityElement = document.createElement("p");
+    const quantity = document.createTextNode(ingredient.quantity);
+    quantityElement.appendChild(quantity);
 
-    containerProduct.appendChild(productElement, brandElement, weightElement);
+    containerProduct.append(productElement, brandElement, quantityElement);
 
-    //price
-
+    //Create price data elements
     const containerPrice = document.createElement("div");
 
     const priceElement = document.createElement("p");
     const price = document.createTextNode(ingredient.price);
-    priceElement.appendChild(price);
+    const currency = document.createTextNode(recipe.currency);
+    priceElement.append(price, " ", currency);
 
-    const currencyElement = document.createElement("p");
-    const currency = document.createTextNode(ingredient.currency);
-    currencyElement.appendChild(currency);
+    containerPrice.appendChild(priceElement);
 
-    containerPrice.appendChild(priceElement, currencyElement);
-
+    //Put elements inside the list
     listElement.append(
       labelCheckbox,
       labelNumber,
       containerProduct,
       containerPrice
     );
-    console.log(listElement);
+
+    ingredientsList.append(listElement);
   });
 }
-
-function total() {}
